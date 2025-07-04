@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Multiplayer - Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🎮 Pong Multiplayer</h1>
+            <div class="game-info">
+                <span class="game-id">Game: {{ game_id }}</span>
+                <span class="connection-status" id="connectionStatus">Connecting...</span>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            
+            <div class="game-overlay" id="gameOverlay">
+                <div class="waiting-screen" id="waitingScreen">
+                    <h2>Waiting for opponent...</h2>
+                    <p>Share this link with a friend:</p>
+                    <div class="share-link">
+                        <input type="text" id="currentGameLink" readonly>
+                        <button id="copyGameLinkBtn" class="btn small">Copy</button>
+                    </div>
+                </div>
+                
+                <div class="game-message" id="gameMessage" style="display: none;">
+                    <h2 id="messageTitle"></h2>
+                    <p id="messageText"></p>
+                    <button id="messageBtn" class="btn primary" style="display: none;">OK</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <div class="controls-info">
+                <p><strong>Your Controls:</strong></p>
+                <p id="playerControls">W (up) / S (down)</p>
+            </div>
+            
+            <div class="score">
+                <div class="score-item">
+                    <span class="player-name">You</span>
+                    <span id="leftScore">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="player-name">Opponent</span>
+                    <span id="rightScore">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-actions">
+            <button id="leaveGameBtn" class="btn secondary">Leave Game</button>
+            <button id="newGameBtn" class="btn primary" style="display: none;">New Game</button>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        // Pass game ID to JavaScript
+        window.GAME_ID = '{{ game_id }}';
+    </script>
+    <script src="{{ url_for('static', filename='multiplayer-game.js') }}"></script>
+</body>
+</html> 
